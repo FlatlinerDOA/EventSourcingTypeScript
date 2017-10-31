@@ -67,7 +67,7 @@ module Users {
 }
 
 
-async function Test() {
+async function TestCreaate() {
     let commands = [
         new Users.CreateUser("frank@stevens.com", "mysecretpassword", "Franky Stevens")
     ];
@@ -86,4 +86,5 @@ async function Test() {
     return result;
 }
 
-Test().then(result => console.log(result));
+TestCreaate().then(result => console.log(result));
+TestCreaate().then(result => console.log(result));

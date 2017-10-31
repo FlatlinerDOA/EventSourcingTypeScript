@@ -19,7 +19,8 @@ export module EphemeralStorage {
         async addEventsAsync(newEvents: EventSourcing.IEvent[]) {
             for (let ev of newEvents) {
                 var evts = this.store[ev.id] || [];
-                if (ev.$version !== evts[evts.length - 1].$version + 1) {
+                let latestVersion = (evts.length !== 0 ? evts[evts.length - 1].$version : 0);
+                if (ev.$version !== latestVersion + 1) {
                     throw new Error("Concurrency error!");
                 }
 

@@ -70,7 +70,7 @@ export module EventSourcing {
             let currentState: IReadModel = typeof context["$type"] !== 'undefined' ? 
                 context as IReadModel :
                 this.buildState(null, context as IEvent[] || []);
-            let version = currentState.$version;
+            let version = !!currentState ? currentState.$version : 0;
             commands.forEach(command => {
                 if (failure.length != 0) {
                     return;
@@ -92,6 +92,7 @@ export module EventSourcing {
                     .forEach(executor => {
                         let newEvents = executor(currentState, command);
                         newEvents.forEach(newEvent => {
+                            newEvent.id = command.id;
                             newEvent.$version = ++version;
                             success.push(newEvent);
                         });
